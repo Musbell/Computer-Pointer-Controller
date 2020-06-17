@@ -186,7 +186,7 @@ ___________________________________________
 ________________________________________________
 
 ## Results
-From the above results, the best model precision combination is that of Face detection 32 bits preand loose accuracycision and other models in 16 bits. 
+From the above results, the best model precision combination is that of Face detection 32 bits precision with other models in 16 bits. 
 This reduce the model size and load time, although models with lower precision gives low accuracy but better inference time.
 
 ## Stand Out Suggestions
