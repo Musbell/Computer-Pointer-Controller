@@ -71,7 +71,7 @@ $ python3 /opt/intel/openvino/deployment_tools/tools/model_downloader/downloader
 Use the following command to run the application
 
 ```
-$ python3 main.py -f model/intel/face-detection-adas-binary-0001/FP32-INT1/face-detection-adas-binary-0001.xml -fl model/intel/landmarks-regression-retail-0009/FP32/landmarks-regression-retail-0009.xml -hp model/intel/head-pose-estimation-adas-0001/FP32/head-pose-estimation-adas-0001.xml -g model/intel/gaze-estimation-adas-0002/FP32/gaze-estimation-adas-0002.xml -i bin/demo.mp4
+python3 src/main.py -i 'bin/demo.mp4' -fld 'models/intel/landmarks-regression-retail-0009/FP16/landmarks-regression-retail-0009.xml' -fd 'models/intel/face-detection-adas-binary-0001/FP32-INT1/face-detection-adas-binary-0001.xml' -ge 'models/intel/gaze-estimation-adas-0002/FP16/gaze-estimation-adas-0002.xml' -hp 'models/intel/head-pose-estimation-adas-0001/FP16/head-pose-estimation-adas-0001.xml' 
 ```
 
 ## Documentation
@@ -190,7 +190,8 @@ From the above results, the best model precision combination is that of Face det
 This reduce the model size and load time, although models with lower precision gives low accuracy but better inference time.
 
 ## Stand Out Suggestions
-This is where you can provide information about the stand out suggestions that you have attempted.
+* I enabled user to select video or camera as input file to the application.
+* I used openvino benchmark to discover the best model precision combination to use, in order to improve inference time and accuracy
 
 ### Async Inference
 If you have used Async Inference in your code, benchmark the results and explain its effects on power and performance of your project.
