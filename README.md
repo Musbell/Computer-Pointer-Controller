@@ -4,7 +4,9 @@ The application uses gaze detection points with the use of deep learning model t
 
 ## Project Set Up and Installation
 OpenVINO™ toolkit and its dependencies must be installed to run the application. OpenVINO 2020.2.130 is used on this project.  
- Installation instructions may be found at: https://software.intel.com/en-us/articles/OpenVINO-Install-Linux or https://github.com/udacity/nd131-openvino-fundamentals-project-starter/blob/master/linux-setup.md  
+ Installation instructions may be found at:
+ * https://software.intel.com/en-us/articles/OpenVINO-Install-Linux 
+ * https://github.com/udacity/nd131-openvino-fundamentals-project-starter/blob/master/linux-setup.md  
 
 There are certain pretrained models you need to download after initializing the openVINO environment:
 
@@ -48,15 +50,11 @@ $ python3 /opt/intel/openvino/deployment_tools/tools/model_downloader/downloader
 *Project structure*
 
 ```
-|
 |--bin
     |--demo.mp4
 |--model
-    |--face-detection-adas-binary-0001
-    |--gaze-estimation-adas-0002
-    |--head-pose-estimation-adas-0001
-    |--landmarks-regression-retail-0009
 |--src
+    |--base.py
     |--face_detection.py
     |--facial_landmarks_detection.py
     |--gaze_estimation.py
@@ -190,7 +188,7 @@ From the above results, the best model precision combination is that of Face det
 This reduce the model size and load time, although models with lower precision gives low accuracy but better inference time.
 
 ## Stand Out Suggestions
-* I enabled user to select video or camera as input file to the application.
+* I enabled user to select video or camera as input to the application.
 * I used openvino benchmark to discover the best model precision combination to use, in order to improve inference time and accuracy
 
 ### Async Inference
