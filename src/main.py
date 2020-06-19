@@ -1,6 +1,7 @@
 import os
 import cv2
 import time
+import numpy as np
 from argparse import ArgumentParser
 
 from input_feeder import InputFeeder
@@ -8,6 +9,7 @@ from face_detection import FaceDetection
 from facial_landmarks_detection import Facial_Landmarks_Detection
 from gaze_estimation import Gaze_Estimation
 from head_pose_estimation import Head_Pose_Estimation
+from prediction_visualization import draw_face_bbox, display_hp, draw_landmarks, draw_gaze
 from mouse_controller import MouseController
 
 
@@ -35,6 +37,9 @@ def build_argparser():
                              "CPU, GPU, FPGA or MYRIAD is acceptable. Sample "
                              "will look for a suitable plugin for device "
                              "(CPU by default)")
+    parser.add_argument("-v", "--visualization", required=False, type=bool,
+                        default=False,
+                        help="Set to True to visualization all different model outputs")
 
     return parser
 
@@ -62,20 +67,17 @@ def main():
     mc = MouseController('medium', 'fast')
 
     # feed input from an image, webcam, or video to model
-    if args.input == "CAM":
+    if args.input == "cam":
         feed = InputFeeder("cam")
     else:
         assert os.path.isfile(args.input), "Specified input file doesn't exist"
         feed = InputFeeder("video", args.input)
     feed.load_data()
-
     frame_count = 0
     for frame in feed.next_batch():
         frame_count += 1
         inf_start = time.time()
         if frame is not None:
-            img_frame = cv2.resize(frame, (500, 500))
-            cv2.imshow('Computer Pointer Controller', img_frame)
             key = cv2.waitKey(60)
 
             det_time = time.time() - inf_start
@@ -84,15 +86,33 @@ def main():
             detected_face, face_coords = fd.predict(frame.copy(), args.prob_threshold)
             hp_output = hp.predict(detected_face.copy())
             left_eye, right_eye, eye_coords = fld.predict(detected_face.copy())
+            new_mouse_coord, gaze_vector = ge.predict(left_eye, right_eye, hp_output)
 
             stop_inference = time.time()
             inference_time = inference_time + stop_inference - inf_start
             counter = counter + 1
 
+            # Visualization
+            preview = args.visualization
+            if preview:
+                preview_frame = frame.copy()
+                face_frame = detected_face.copy()
+
+                draw_face_bbox(preview_frame, face_coords[0], face_coords[1], face_coords[2], face_coords[3])
+                display_hp(preview_frame, hp_output[0], hp_output[1], hp_output[2])
+                draw_landmarks(face_frame, eye_coords)
+                draw_gaze(face_frame, gaze_vector, left_eye.copy(), right_eye.copy(), eye_coords)
+
+            if preview:
+                img = np.hstack((cv2.resize(preview_frame, (500, 500)), cv2.resize(face_frame, (500, 500))))
+            else:
+                img = cv2.resize(frame, (500, 500))
+
+            cv2.imshow('Visualization', img)
+
             # set speed
             if frame_count % 5 == 0:
-                mouse_x, mouse_y = ge.predict(left_eye, right_eye, hp_output)
-                mc.move(mouse_x[0], mouse_y[1])
+                mc.move(new_mouse_coord[0], new_mouse_coord[1])
 
             # INFO
             print(f'[INFO] approx. NUMBER OF FRAMES: {frame_num}')

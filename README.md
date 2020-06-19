@@ -55,6 +55,7 @@ $ python3 /opt/intel/openvino/deployment_tools/tools/model_downloader/downloader
 |--model
 |--src
     |--base.py
+    |--prediction_visualization
     |--face_detection.py
     |--facial_landmarks_detection.py
     |--gaze_estimation.py
@@ -80,6 +81,7 @@ $ python3 main.py --help
 usage: main.py [-h] -fd FACE_DETECTION_MODEL -fld FACIAL_LANDMARK_MODEL -ge
                GAZE_ESTIMATION_MODEL -hp HEAD_POSE_MODEL -i INPUT
                [-l CPU_EXTENSION] [-prob PROB_THRESHOLD] [-d DEVICE]
+               [-v VISUALIZATION]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -102,6 +104,9 @@ optional arguments:
                         Specify the target device to run on: CPU, GPU, FPGA or
                         MYRIAD is acceptable. Sample will look for a suitable
                         plugin for device (CPU by default)
+  -v VISUALIZATION, --visualization VISUALIZATION
+                        Set to True to visualization all different model
+                        outputs
 ```
 
 ## Benchmarks

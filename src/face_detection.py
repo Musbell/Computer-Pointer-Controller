@@ -1,5 +1,5 @@
 import numpy as np
-
+import  cv2
 from base import Inference
 
 
@@ -21,6 +21,7 @@ class FaceDetection(Inference):
 
         coords = (coords * np.array([w, h, w, h])).astype(np.int32)
         crop_img = image[coords[1]:coords[3], coords[0]:coords[2]]
+
         return crop_img, coords
     
     def clean(self):
