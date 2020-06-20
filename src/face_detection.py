@@ -23,6 +23,6 @@ class FaceDetection(Inference):
         crop_img = image[coords[1]:coords[3], coords[0]:coords[2]]
 
         return crop_img, coords
-    
+
     def clean(self):
         return super(FaceDetection, self).clean()

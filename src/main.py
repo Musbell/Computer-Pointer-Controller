@@ -98,8 +98,8 @@ def main():
                 preview_frame = frame.copy()
                 face_frame = detected_face.copy()
 
-                draw_face_bbox(preview_frame, face_coords[0], face_coords[1], face_coords[2], face_coords[3])
-                display_hp(preview_frame, hp_output[0], hp_output[1], hp_output[2])
+                draw_face_bbox(preview_frame, face_coords)
+                display_hp(preview_frame, hp_output, face_coords)
                 draw_landmarks(face_frame, eye_coords)
                 draw_gaze(face_frame, gaze_vector, left_eye.copy(), right_eye.copy(), eye_coords)
 

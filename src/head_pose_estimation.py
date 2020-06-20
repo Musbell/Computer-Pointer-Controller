@@ -7,7 +7,8 @@ class Head_Pose_Estimation(Inference):
 
     @staticmethod
     def preprocess_output(outputs, *args, **kwargs):
-        return [outputs[key][0][0] for key in outputs]
+        hp_out = [outputs[key][0][0] for key in outputs]
+        return [hp_out[2], hp_out[0], hp_out[1]]
 
     def predict(self, image):
         coords = self.prediction_helper(image, self.preprocess_output)
