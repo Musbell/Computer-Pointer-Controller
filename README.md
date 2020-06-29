@@ -2,6 +2,8 @@
 
 The application uses gaze detection points with the use of deep learning model to estimate the gaze of user's eyes to move the mouse pointer position. It supports camera video stream and video file as input.
 
+![GitHub Logo](https://res.cloudinary.com/musbell/image/upload/v1593412980/ezgif.com-gif-maker_mjb5vf.gif)
+
 ## Project Set Up and Installation
 OpenVINO™ toolkit and its dependencies must be installed to run the application. OpenVINO 2020.2.130 is used on this project.  
  Installation instructions may be found at:
